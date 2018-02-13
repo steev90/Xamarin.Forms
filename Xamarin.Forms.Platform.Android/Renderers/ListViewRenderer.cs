@@ -56,7 +56,7 @@ namespace Xamarin.Forms.Platform.Android
 			{
 				if (_headerRenderer != null)
 				{
-					ClearRenderer(_headerRenderer.View);
+					Platform.ClearRenderer(_headerRenderer.View);
 					_headerRenderer.Dispose();
 					_headerRenderer = null;
 				}
@@ -66,7 +66,7 @@ namespace Xamarin.Forms.Platform.Android
 
 				if (_footerRenderer != null)
 				{
-					ClearRenderer(_footerRenderer.View);
+					Platform.ClearRenderer(_footerRenderer.View);
 					_footerRenderer.Dispose();
 					_footerRenderer = null;
 				}
@@ -282,23 +282,6 @@ namespace Xamarin.Forms.Platform.Android
 				Control.SetSelectionFromTop(realPositionWithHeader, y);
 		}
 
-		void ClearRenderer(AView renderedView)
-		{
-			var element = (renderedView as IVisualElementRenderer)?.Element;
-			var view = element as View;
-			if (view != null)
-			{
-				var renderer = Platform.GetRenderer(view);
-				if (renderer == renderedView)
-					element.ClearValue(Platform.RendererProperty);
-				renderer?.Dispose();
-				renderer = null;
-			}
-			var layout = view as IVisualElementRenderer;
-			layout?.Dispose();
-			layout = null;
-		}
-
 		void UpdateFooter()
 		{
 			var footer = (VisualElement)Controller.FooterElement;
@@ -310,7 +293,7 @@ namespace Xamarin.Forms.Platform.Android
 				{
 					if (_footerView != null)
 						_footerView.Child = null;
-					ClearRenderer(_footerRenderer.View);
+					Platform.ClearRenderer(_footerRenderer.View);
 					_footerRenderer.Dispose();
 					_footerRenderer = null;
 				}
@@ -342,7 +325,7 @@ namespace Xamarin.Forms.Platform.Android
 				{
 					if (_headerView != null)
 						_headerView.Child = null;
-					ClearRenderer(_headerRenderer.View);
+					Platform.ClearRenderer(_headerRenderer.View);
 					_headerRenderer.Dispose();
 					_headerRenderer = null;
 				}
